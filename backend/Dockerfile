@@ -13,3 +13,7 @@ EXPOSE 3000
 FROM base AS dev
 
 CMD [ "npm", "run", "dev" ]
+
+FROM base as prod
+
+CMD [ "npm", "run", "start"]

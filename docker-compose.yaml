@@ -10,7 +10,7 @@ services:
 
   backend:
     build: 
-      context:  ./backend
+      context: ./backend
       target: dev
     environment:
       DB_HOSTNAME: db

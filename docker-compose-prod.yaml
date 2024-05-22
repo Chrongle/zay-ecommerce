@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: b5160r/zay-frontend:prod
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
+  backend:
+    image: b5160r/zay-backend:prod
+    environment:
+      DB_HOSTNAME: db
+      DB_USERNAME: /run/secrets/db_username
+      DB_PASSWORD: /run/secrets/db_password
+      DB_DATABASE: zay
+    secrets:
+      - db_username
+      - db_password
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    command: >
+      sh -c "npm run db:reset && npm start"
+
+  db:
+    image: mysql:8.4
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'zay'
+      MYSQL_USER: /run/secrets/db_username
+      MYSQL_PASSWORD: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD: /run/secrets/db_root_password
+    secrets:
+      - db_root_password
+      - db_username
+      - db_password
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - my-db:/var/lib/mysql
+
+secrets:
+  db_username:
+    external: true
+  db_password:
+    external: true
+  db_root_password:
+    external: true
+
+volumes:
+  my-db:

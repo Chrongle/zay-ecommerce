@@ -74,8 +74,21 @@ For at implementere applikationen i en Docker Swarm cluser, følg nedenstående 
 
 Dette vil starte alle de nødvendige services defineret i `docker-compose-prod.yaml` filen i en Docker Swarm cluster.
 
-### Script
+### Scripts
 
-Ovenstående setup er gjort nemmere med med følgende to scripts:
+Ovenstående setup og oprydning er gjort nemmere med med følgende to scripts:
 
-...
+- `DockerSwarmInit.cmd`
+	```sh
+	docker swarm init
+	echo "kitty" | docker secret create db_username -
+	echo "hellokitty" | docker secret create db_password -
+	echo "hellorootkitty" | docker secret create db_root_password -
+	docker stack deploy -c docker-compose-prod.yaml zay-swarm
+	```
+
+- `DockerSwarmCleanUp.cmd`
+	```sh
+	docker swarm leave --force
+	docker image prune --force
+	```

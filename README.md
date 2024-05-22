@@ -66,6 +66,9 @@ For at implementere applikationen i en Docker Swarm cluser, følg nedenstående 
     ```sh
     docker swarm init
     ```
+    Commandoen returner en commando som kan køres på en anden maskine, så denne tilføjes som worker node.
+
+    `docker swarm join --token [token] [ip]]:2377`
 
 2. Deploy stacken ved hjælp af produktions `docker-compose` filen:
     ```sh
@@ -92,3 +95,34 @@ Ovenstående setup og oprydning er gjort nemmere med med følgende to scripts:
 	docker swarm leave --force
 	docker image prune --force
 	```
+
+### Docker Installation på Linux Distro
+
+For installation af Docker på en Linux Distro (i dette eksempel Manjaro), følg nedenstående trin med forbehold for packagemanager:
+
+1. Update: 
+    ```sh
+    sudo pacman -Syu
+    ```
+2. Installere Docker:
+    ```sh
+    sudo pacman -S docker
+    ``
+3. Start Docker:
+    ```sh
+    sudo systemctl start docker.service
+    ```
+
+4. Check at den kører:
+    ```sh
+    sudo docker info
+    ```
+
+5. Sæt Docker til at køre uden root (for det bliver hurtigt trælst):
+    ```sh
+    sudo usermod -aG docker $USER
+    ```
+
+6. Efter reboot kan docker køres uden root
+
+7. Her kan man eventuelt vælge at benytte commandoen fra før `docker swarm join --token [token] [ip]]:2377` og joine maskinen som worker node.

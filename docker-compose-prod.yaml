@@ -7,6 +7,8 @@ services:
       - "8080:8080"
     depends_on:
       - backend
+    deploy:
+      replicas: 3
 
   backend:
     image: b5160r/zay-backend:prod
@@ -24,6 +26,8 @@ services:
       - db
     command: >
       sh -c "npm run db:reset && npm start"
+    deploy:
+      replicas: 3
 
   db:
     image: mysql:8.4

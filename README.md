@@ -20,6 +20,17 @@ There is a specific README.md file in the backend project
 
 Denne README.md fil forklarer opsætningen og anvendelsen af Docker til både frontend og backend applikationer ved hjælp af multi-staging builds, som gør det muligt at bruge de samme Dockerfiles til både development og production.
 
+### Docker Opsætning - Trin for Trin
+
+1. Vi lavede Dockerfiler til frontend og backend. Vi tog udgangspunkt i at det er et Vue projekt.
+
+2. Vi lavede en docker-compose fil, som pegede på både frontend, backend samt et image til mysql database. Med databasen angav vi et volume.
+
+3. Da vi fik ovenstående til at virke, ændrede vi i Dockerfilerne så de kunne håndtere Multi-stage building (Dette bliver beskrevet længere nede).
+Vi lavede også en ekstra docker-compose fil til at pege på publishede images af frontend og backend.
+
+4. Efter at have lavet multistage build, har vi opsat et script til at initialisere Docker Swarm med deployment af docker-compose filen samt Docker Secrets (Dette bliver også beskrevet længere nede).
+
 ### Multi-staging Builds
 
 Ved hjælp af multi-staging builds i Docker kan vi definere flere stadier i vores Dockerfiles. Dette betyder, at vi kan bygge og teste applikationen i både et udviklings og produktions miljø.
@@ -31,6 +42,13 @@ Der er to `docker-compose` filer inkluderet i opsætningen:
 - `docker-compose-prod.yaml` til produktionsmiljøet.
 
 Disse filer hjælper med at konfigurere og starte containere med de nødvendige indstillinger for de forskellige miljøer.
+
+### Replications
+
+Vi har i docker-compose filen tilføjet replications til frontend og backend.
+Dette har vi gjort, da det er services, som kunne blive hyppigt brugt i et fremtidigt miljø for en webshop, hvilket vil skabe et stort load, som man kan skalere sig ud af.
+Vi har ikke valgt at lave replications til databasen, da vi mener at det kan skabe øget kompleksitet at have mere end 1 instans af den samme database, der bl.a. skal kunne finde ud af at synkronisere med hinanden.
+Man kunne vælge at kigge nærmere på skalering af en database, når man nærmer sig en microservice arkitektur.
 
 ### Docker Hub Push
 

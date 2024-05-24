@@ -134,7 +134,7 @@ Testen indebar at initialisere en swarm på en maskine, som her automatisk blive
 
 1. Dette gøres simpelt med førnævnte script: `DockerSwarmInit.cmd`
 
-2. Herefter joines de to andre maskiner som workernodes ved brug a commandoen der returnes ved initialisering i forrige trin.
+2. Herefter joines de to andre maskiner som workernodes ved brug af commandoen der returnes ved initialisering i forrige trin.
     `docker swarm join --token [token] [ip]]:2377`
 
 3. Nu kan man så på manager node maskinen tjekke om worker nodes er join'et med brug af commandoen `docker node ls`.

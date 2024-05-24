@@ -134,11 +134,18 @@ Testen indebar at initialisere en swarm på en maskine, som her automatisk blive
 
 1. Dette gøres simpelt med førnævnte script: `DockerSwarmInit.cmd`
 
-2. Herefter joines de to andre maskiner som workernodes ved brug af commandoen der returnes ved initialisering i forrige trin.
+2. Herefter kan man joine de to andre maskiner som workernodes ved brug af commandoen der returnes ved initialisering i forrige trin.
     `docker swarm join --token [token] [ip]]:2377`
 
 3. Nu kan man så på manager node maskinen tjekke om worker nodes er join'et med brug af commandoen `docker node ls`.
 
-4. Services kan nu skaleres som ønsket med commandoen: `docker service scale SERVICE=REPLICAS`
+4. Man kan også tjekke services der kører og hvor mange replicas der er ved hver service med commandoen:  `docker service ls`
 
-5. Sidst bør det testes om services genfordeles korrekt i tilfælde af at en node er nede. Dette gøres blot ved at lade en worker node forlade swarm'en med brug af commandoen: `docker swarm leave --force`
+5. Services kan nu skaleres som ønsket med commandoen: `docker service scale [service-navn]=[replicas-antal]`
+Test igen med commandoen: `docker service ls`
+
+6. Man kan teste replicas ved at stop en container manuelt med: `docker stop [container-id]`
+Test af flere omgange med commandoen: `docker service ls`
+Man skulle gerne kunne nå at se swarmen spinne en ny container op.
+
+7. Sidst bør det testes om services genfordeles korrekt i tilfælde af at en node er nede. Dette gøres blot ved at lade en worker node forlade swarm'en med brug af commandoen: `docker swarm leave --force`

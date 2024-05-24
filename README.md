@@ -132,7 +132,7 @@ For installation af Docker på en Linux Distro (i dette eksempel Manjaro), følg
 
 Testen indebar at initialisere en swarm på en maskine, som her automatisk bliver en manager node i swarm'en, og efterfølgende joine to andre maskiner som worker nodes. Beskrevet i følgende trin:
 
-1 .Dette gøres simpelt med førnævnte script: `DockerSwarmInit.cmd`
+1. Dette gøres simpelt med førnævnte script: `DockerSwarmInit.cmd`
 
 2. Herefter joines de to andre maskiner som workernodes ved brug a commandoen der returnes ved initialisering i forrige trin.
     `docker swarm join --token [token] [ip]]:2377`

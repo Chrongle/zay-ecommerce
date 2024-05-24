@@ -126,3 +126,19 @@ For installation af Docker på en Linux Distro (i dette eksempel Manjaro), følg
 6. Efter reboot kan docker køres uden root
 
 7. Her kan man eventuelt vælge at benytte commandoen fra før `docker swarm join --token [token] [ip]]:2377` og joine maskinen som worker node.
+
+
+### Test af Applikationen i Docker Swarm
+
+Testen indebar at initialisere en swarm på en maskine, som her automatisk bliver en manager node i swarm'en, og efterfølgende joine to andre maskiner som worker nodes. Beskrevet i følgende trin:
+
+1 .Dette gøres simpelt med førnævnte script: `DockerSwarmInit.cmd`
+
+2. Herefter joines de to andre maskiner som workernodes ved brug a commandoen der returnes ved initialisering i forrige trin.
+    `docker swarm join --token [token] [ip]]:2377`
+
+3. Nu kan man så på manager node maskinen tjekke om worker nodes er join'et med brug af commandoen `docker node ls`.
+
+4. Services kan nu skaleres som ønsket med commandoen: `docker service scale SERVICE=REPLICAS`
+
+5. Sidst bør det testes om services genfordeles korrekt i tilfælde af at en node er nede. Dette gøres blot ved at lade en worker node forlade swarm'en med brug af commandoen: `docker swarm leave --force`
